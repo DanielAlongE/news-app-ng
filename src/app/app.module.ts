@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { CoreModule } from './modules/core/core.module';
+import { MainModule } from './main/main.module';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -12,8 +13,9 @@ import { CoreModule } from './modules/core/core.module';
   ],
   imports: [
     BrowserModule,
-    CoreModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    MainModule, 
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

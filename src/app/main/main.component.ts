@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SampleService } from '../core/sample.service';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sample: SampleService) { }
 
   ngOnInit() {
+
+    //this.sample.do().subscribe(arr => console.log(arr))
+    //console.log(typeof this.sample)
   }
 
 }

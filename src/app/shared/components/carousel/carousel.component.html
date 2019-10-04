@@ -1,0 +1,30 @@
+
+<div [id]="id" [ngStyle]="style" class="carousel slide pointer-event {{class}}" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li *ngFor="let slide of slides; let i = index" [attr.data-target]="'#'+id" [attr.data-slide-to]="i" [class.active]="i===0"></li>
+    </ol>
+
+    <div class="carousel-inner">
+            <div *ngFor="let slide of slides; let i = index" class="carousel-item" [class.active]="i===0" >
+                <ng-template [ngTemplateOutlet]="slide.templateRef"></ng-template>
+
+                <div *ngIf="slide.title || slide.description" style="right:0%; left:0%; background-color:rgb(0,0,0,0.5);" class="carousel-caption d-none d-md-block">
+                        <h5 *ngIf="slide.title" [innerHtml]="slide.title"></h5>
+                        <p  *ngIf="slide.description" [innerHtml]="slide.description"></p>
+                </div>
+            </div>
+    </div>
+
+    <ng-template [ngIf]="showControls">
+        <a class="carousel-control-prev" [href]="'#'+id" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" [href]="'#'+id" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+        </a>
+    </ng-template>
+    
+
+  </div>

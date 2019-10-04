@@ -1,0 +1,78 @@
+    <ng-template #singlePostTemplate let-post='post' let-isFetching='isFetching' >
+            <div *ngIf="!isFetching" class="card mt-3 mb-3">
+                <img [src]="post?.media?.full" style="object-fit: cover; height: 400px;" class="card-img" [alt]="post.title">
+                <div class="card-body">
+                    <h5 class="card-title" [innerHtml]="post?.title"></h5>
+                    <p class="card-text"><small class="text-muted">{{post?.date}}</small></p>
+                    <p class="card-text" [innerHtml]="post?.content"></p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                    <div *ngIf="isFetching" class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+            </div>
+    </ng-template>
+
+
+    <ng-template #postTemplate let-post='post' >
+        <div class="card col-12 mb-3" [routerLink]="[ '/news', post.slug ]" >
+            <div class="row no-gutters">
+            <div class="col-md-4">
+                <img [src]="post?.media?.full" style="object-fit: cover; height: 100%;" class="card-img" [alt]="post.title">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title" [innerHtml]="post?.title"></h5>
+                <p class="card-text" [innerHtml]="post?.excerpt"></p>
+                <p class="card-text"><small class="text-muted">{{post?.date}}</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #postsTemplate let-posts="posts" let-isFetching="isFetching" let-morePosts="morePosts" >
+            <div class="mt-3" *ngFor="let post of posts">
+                <ng-template [ngTemplateOutlet]="postTemplate" [ngTemplateOutletContext]="{post:post}"></ng-template>
+            </div>        
+
+            <div class="d-flex justify-content-center mt-2">
+                    <div *ngIf="isFetching" class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <button *ngIf="!isFetching" class="btn btn-primary" type="button" (click)="morePosts()">
+                        More
+                    </button>
+            </div>
+
+    </ng-template>
+
+    
+
+    <ng-template #sample let-posts="posts">
+        <p>one</p>
+    </ng-template>
+    
+
+<ng-container *ngIf="isSingle; then thenTemplate; else elseTemplate"></ng-container>
+
+<ng-template #thenTemplate>
+    <app-single-post slug="{{slug}}" #singlePost>
+            <ng-template [ngTemplateOutlet]="singlePostTemplate" [ngTemplateOutletContext]="singlePost"></ng-template> 
+    </app-single-post>
+    
+</ng-template>
+
+<ng-template #elseTemplate>
+        <app-posts [categories]="category" #postsRef>
+            <ng-template [ngTemplateOutlet]="postsTemplate" [ngTemplateOutletContext]="postsRef"></ng-template>   
+        </app-posts>
+</ng-template>
+    
+    
+    
+    
+
+
+<button (click)="goHome()">Back Home</button>
