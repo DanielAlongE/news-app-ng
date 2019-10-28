@@ -1,43 +1,93 @@
-<app-categories [args]="{parent:0, per_page:5}" #navCat></app-categories>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">P</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+<app-posts [args]="{per_page:5}" #latest></app-posts>
 
-            <li *ngFor="let item of navCat.categories" class="nav-item" routerLinkActive="active">
-                <a class="nav-link" [routerLink]="[ '/news','category', item.id ]" [innerHtml]="item.name"></a>
-            </li>
-            
-
-          </ul>
-        </div>
-      </nav>
-
-<app-posts #latest>
-    <app-carousel *ngIf="latest.posts.length > 0" [showControls]="true" [ngStyle]="{'margin-bottom': 10}">
+<app-carousel [showControls]="true" [ngStyle]="{'margin-bottom': 10}">
             
         <ng-template *ngFor="let post of latest.posts" title="{{post.title}}" description="{{post.excerpt}}" carouselSlide>
-            <div class="card mb-3">
-                <img  style="max-height: 300px;" [src]="post.media.full" class="card-img-top" alt="post.title">
+            <div class="card mb-3" [routerLink]="[ '/news', post.slug ]" >
+                <img  style="object-fit: cover; height: 400px;" [src]="post.media.full" class="card-img-top" alt="post.title">
             </div>
         </ng-template>
 
-    </app-carousel>
-</app-posts>
+        <ng-template *ngIf="latest.posts.length === 0" carouselSlide>
+            <div class="d-flex justify-content-center align-items-center mt-2" style="height: 400px; background-color: #ccc;">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
 
-<app-categories [args]="{per_page:10}" #cat>
+</app-carousel>
 
-        <ul class="list-group mt-3">
-                <li *ngFor="let item of cat.categories" class="list-group-item" [innerHtml]="item.name"></li>
-                <li *ngIf="cat.isFetching" class="list-group-item">
-                    <div *ngIf="isFetching" class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
-                    </div>
-                </li>
-        </ul>
+<ng-template #loading>
+    <div class="d-flex justify-content-center align-items-center mt-2" style="height: 100%;">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
 
-</app-categories>
+
+<ng-template #listMedia let-posts="posts">
+    <ul class="list-unstyled">
+        <li *ngFor="let post of posts" class="media mb-3" [routerLink]="[ '/news', post.slug ]" >
+          <img [src]="post.media.thumbnail" class="mr-3" [alt]="post.title">
+          <div class="media-body" style="overflow: hidden; height:150px;">
+            <h5 class="mt-0 mb-1" [innerHtml]="post.title"></h5>
+            <div [innerHtml]="post.excerpt"></div>
+          </div>
+        </li>
+      </ul>
+</ng-template>
+
+
+  <div class="row">
+    <div class="col-6">
+        <app-posts [args]="{categories:1,per_page:5}" #business></app-posts>
+      <div class="card mb-3">
+          <div class="card-header">Business News</div>
+          <div class="card-body">
+
+            <ng-template [ngTemplateOutlet]="listMedia" [ngTemplateOutletContext]="business" ></ng-template>
+            <ng-template [ngTemplateOutlet]="loading" [ngIf]="business.isFetching" ></ng-template>
+            
+          </div>    
+      </div>
+
+      <app-posts [args]="{categories:35, per_page:5}" #world></app-posts>
+      <div class="card mb-3">
+          <div class="card-header">World New</div>
+          <div class="card-body">
+
+            <ng-template [ngTemplateOutlet]="listMedia" [ngTemplateOutletContext]="world" ></ng-template>
+            <ng-template [ngTemplateOutlet]="loading" [ngIf]="world.isFetching" ></ng-template>
+          </div>    
+      </div>
+
+    </div>
+    <div class="col-6">
+
+        <app-posts [args]="{categories:5,per_page:5}" #sport></app-posts>
+        <div class="card mb-3">
+            <div class="card-header">Sport News</div>
+            <div class="card-body">
+  
+              <ng-template [ngTemplateOutlet]="listMedia" [ngTemplateOutletContext]="sport" ></ng-template>
+              <ng-template [ngTemplateOutlet]="loading" [ngIf]="sport.isFetching" ></ng-template>
+            </div>    
+        </div>
+
+        <app-posts [args]="{categories:3558,per_page:5}" #regional></app-posts>
+        <div class="card mb-3">
+            <div class="card-header">Regional News</div>
+            <div class="card-body">
+  
+              <ng-template [ngTemplateOutlet]="listMedia" [ngTemplateOutletContext]="regional" ></ng-template>
+      
+              <ng-template [ngTemplateOutlet]="loading" [ngIf]="regional.isFetching" ></ng-template>
+            </div>    
+        </div>
+
+      </div>
+
+  </div>

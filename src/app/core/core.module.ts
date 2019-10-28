@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
 //import { SampleService } from './sample.service';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent],
+  declarations: [],
   imports: [
-    CommonModule, RouterModule.forChild([])
-    , HttpClientModule
+    CommonModule, 
+    RouterModule.forChild([]), 
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  exports:[HeaderComponent],
+  exports:[FormsModule, CommonModule, ReactiveFormsModule],
   providers: []
 })
 export class CoreModule { }

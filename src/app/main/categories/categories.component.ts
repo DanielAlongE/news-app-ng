@@ -3,8 +3,7 @@ import { WordpressService } from 'src/app/core/wordpress/wordpress.service';
 
 @Component({
   selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  template: `<ng-content></ng-content>`,
 })
 export class CategoriesComponent implements OnInit {
   url: string = "https://www.premiumtimesng.com"

@@ -1,0 +1,34 @@
+<ng-template #postTemplate let-post='post' >
+
+</ng-template>
+<!-- 
+<ng-template [ngTemplateOutlet]="postsTemplate" [ngTemplateOutletContext]="postsRef"></ng-template>    
+-->
+
+
+<app-posts [args]="{search:query}" #postsRef>
+    <h2>Search results for "{{query}}"</h2>
+        <div *ngFor="let post of postsRef.posts" class="card mb-3" [routerLink]="[ '/news', post.slug ]" >
+            <div class="row no-gutters">
+            <div class="col-md-4">
+                <img [src]="post?.media?.full" style="object-fit: cover; height: 100%;" class="card-img" [alt]="post.title">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title" [innerHtml]="post?.title"></h5>
+                <p class="card-text" [innerHtml]="post?.excerpt"></p>
+                <p class="card-text"><small class="text-muted">{{post?.date}}</small></p>
+                </div>
+            </div>
+            </div>
+        </div>    
+        
+        <div class="d-flex justify-content-center mt-2">
+                <div *ngIf="postsRef.isFetching" class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <button *ngIf="!postsRef.isFetching" class="btn btn-primary" type="button" (click)="postsRef.morePosts()">
+                    More
+                </button>
+        </div>
+</app-posts>

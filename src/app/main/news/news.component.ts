@@ -11,12 +11,11 @@ export class NewsComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private wp: WordpressService) { }
 
-  url: string = "https://www.premiumtimesng.com";
+
   args: any = {};
-  posts: any[] = [];
-  isFetching: boolean = false;
   slug: string;
-  category: string;
+  category: string = "";
+  tag: string = "";
   isSingle: boolean = false;
 
  
@@ -25,26 +24,25 @@ export class NewsComponent implements OnInit {
     //const {category, slug} = this.route.snapshot.params;
 
     this.route.params.forEach((params: Params) => {
-      console.log("params -> ", params['slug'], params['category'])
+      console.log("params -> ", params )
       this.slug = params['slug'];
-      this.category = params['category'];
+      let option = params['option'];
 
-      if(this.category && this.slug){
+      this.isSingle = false;
+        
+      if(option === 'category' && this.slug){
         this.category = this.slug;
-        this.isSingle = false;
+      }
+      else if(option === 'tag' && this.slug){
+        this.tag = this.slug;
       }
       else if(this.slug){
         this.isSingle = true;
       }
-      else{
-        this.isSingle = false;
-      }
+
 
     });
 
-    
-
-    //console.log({category, slug});
   }
 
 
@@ -52,17 +50,5 @@ export class NewsComponent implements OnInit {
     this.router.navigate(["/"])
   }
 
-  fetchPosts(args: object = {}){
-
-    this.isFetching = true;
-
-    this.wp.fetchPosts(this.url, args).subscribe(data => {
-      let prepared = this.wp.preparePosts(data);
-      this.posts.push(...prepared);
-      this.isFetching = false;
-      //console.log({data})
-    } )
-
-  }
 
 }

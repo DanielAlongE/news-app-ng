@@ -1,21 +1,18 @@
 <app-header></app-header>
 <div class="container">
-<div class="row">
-      <div class="col-9">
-        <router-outlet></router-outlet>            
-      </div>
-      <div class="col-3">
-            <app-categories #cat >
-                        <ul class="nav nav-pills flex-column" >
-                              <li *ngFor="let item of cat.categories" class="nav-item " >
-                                    <a class="nav-link" [routerLink]="[ '/news','category', item.id ]" routerLinkActive="active" [innerHtml]="item.name" > <span class="sr-only">(current)</span></a>
-                              </li>
-                        </ul>
-            </app-categories>
-      </div>
+      <router-outlet></router-outlet>      
+</div>        
+        
 
-</div>
+<!-- 
+      <app-categories #cat >
+                  <ul class="nav nav-pills flex-column" >
+                        <li *ngFor="let item of cat.categories" class="nav-item " >
+                              <a class="nav-link" [routerLink]="[ '/news','category', item.id ]" routerLinkActive="active" [innerHtml]="item.name" > <span class="sr-only">(current)</span></a>
+                        </li>
+                  </ul>
+      </app-categories>      
+ -->
+
 
     
-    
-  </div>
