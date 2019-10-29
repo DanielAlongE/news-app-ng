@@ -10,7 +10,7 @@ export enum SettingsActionTypes {
 export class UpdateSettings implements Action {
     readonly type = SettingsActionTypes.UpdateSettings;
 
-    constructor(public payload: any[]){}
+    constructor(public payload: any){}
 }
 
 export class ResetSettings implements Action {

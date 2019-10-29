@@ -1,8 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { SettingsActionTypes, SettingsActions } from './settings.action';
+import { Settings } from './settings';
 
 
-const initialState = {
+const initialState: Settings = {
     url: "https://www.thecable.ng",
     name: "The Cable"
     }
@@ -14,7 +15,7 @@ export const getSettings = createSelector(
     state => state
 )
 
-export function reducer (state = {...initialState} , action: SettingsActions) {
+export function reducer (state: Settings = {...initialState} , action: SettingsActions): Settings {
 
     switch (action.type) {
         

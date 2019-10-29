@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { WordpressService } from 'src/app/core/wordpress/wordpress.service';
+import { Store, select } from '@ngrx/store';
+import { getSettings } from '../settings/state/settings.reducer';
 
 @Component({
   selector: 'app-single-post',
@@ -7,7 +9,7 @@ import { WordpressService } from 'src/app/core/wordpress/wordpress.service';
 })
 export class SinglePostComponent implements OnInit {
 
-  constructor(private wp: WordpressService) { }
+  constructor(private wp: WordpressService, private store: Store<any>) { }
   url: string = "https://www.premiumtimesng.com"
   post: any = {}
   isFetching: boolean = true;
@@ -21,8 +23,19 @@ export class SinglePostComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log("slug", this.slug);
-    this.fetchPost(this.args);
+
+
+  }
+
+  ngOnChanges(): void {
+    
+    this.store.pipe(select(getSettings)).subscribe( settings => {
+      this.url = settings.url;
+    });    
+
+    //console.log("slug", this.slug);
+    this.fetchPost(this.args);    
+
   }
 
   fetchPost(obj: object = {}){

@@ -47,18 +47,20 @@ export class PostsComponent implements OnInit {
     //this.store.dispatch(new postsActions.FetchPosts())
     console.log("ngOnInit posts")
 
+
     
 
   }
 
   ngOnChanges(): void {
 
-    console.log("ngOnChanges posts")
+    console.log("ngOnChanges posts");
+
 
     this.store.pipe(select(getSettings)).subscribe( settings => {
       this.url = settings.url;
-      console.log("settings ", settings.url)
-    });    
+      console.log("posts settings url", this.url)
+    });
     
     this.posts = []
     this.morePosts(this.args);

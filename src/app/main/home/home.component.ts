@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+//import { SettingsActions } from '../settings/state/settings.action';
+
 
 @Component({
   selector: 'app-home',
@@ -8,11 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute) { }
+  constructor(private route:ActivatedRoute, private store: Store<any>) { }
 
 
   ngOnInit() {
-    console.log(this.route.snapshot)
+    //console.log(this.route.snapshot)
+
+    //this.store.dispatch(new SettingsActions.UpdateSettings({}))
 
   }
 
